@@ -9,8 +9,8 @@ class HomeController extends Controller
     //
 
     public function index(){
-
-        return view('index');
+        $data = DB::table('students')->get();
+        return view('index',compact('data'));
     }
 
     public function student_post(Request $request)
@@ -24,6 +24,12 @@ class HomeController extends Controller
             'status' => '201',
             'message' => 'success',
         ]);
+    }
+
+    public function delete_student($id)
+    {
+        DB::table('students')->where('id',$id)->delete();
+        return response()->json('success');
     }
 
 }

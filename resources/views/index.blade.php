@@ -22,6 +22,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
     rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -38,13 +39,13 @@
                 <thead class="bg-light">
                   <tr>
                     <th>Name</th>
-                    <th>Title</th>
-                    <th>Status</th>
-                    <th>Position</th>
+                    <th>Roll</th>
+                    <th>Subject</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                @foreach($data as $item)
                   <tr>
                     <td>
                       <div class="d-flex align-items-center">
@@ -55,93 +56,23 @@
                             class="rounded-circle"
                             />
                         <div class="ms-3">
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                          <p class="text-muted mb-0">{{$item->name}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="fw-normal mb-1">Software engineer</p>
-                      <p class="text-muted mb-0">IT department</p>
+                      <p class="fw-normal mb-1">{{$item->roll}}</p>
                     </td>
                     <td>
-                      <span class="badge badge-success rounded-pill d-inline">Active</span>
+                      <p class="fw-normal mb-1">{{$item->subject}}</p>
                     </td>
-                    <td>Senior</td>
+                    
                     <td>
-                      <button type="button" class="btn btn-link btn-sm btn-rounded">
-                        Edit
-                      </button>
+                      <button id="" id_val="{{$item->id}}" type="button" class="delete_btn btn btn-danger">Delete</button>
+                      <button type="button" class="btn  btn-primary">Edit</button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <img
-                            src="https://mdbootstrap.com/img/new/avatars/6.jpg"
-                            class="rounded-circle"
-                            alt=""
-                            style="width: 45px; height: 45px"
-                            />
-                        <div class="ms-3">
-                          <p class="fw-bold mb-1">Alex Ray</p>
-                          <p class="text-muted mb-0">alex.ray@gmail.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="fw-normal mb-1">Consultant</p>
-                      <p class="text-muted mb-0">Finance</p>
-                    </td>
-                    <td>
-                      <span class="badge badge-primary rounded-pill d-inline"
-                            >Onboarding</span
-                        >
-                    </td>
-                    <td>Junior</td>
-                    <td>
-                      <button
-                              type="button"
-                              class="btn btn-link btn-rounded btn-sm fw-bold"
-                              data-mdb-ripple-color="dark"
-                              >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <img
-                            src="https://mdbootstrap.com/img/new/avatars/7.jpg"
-                            class="rounded-circle"
-                            alt=""
-                            style="width: 45px; height: 45px"
-                            />
-                        <div class="ms-3">
-                          <p class="fw-bold mb-1">Kate Hunington</p>
-                          <p class="text-muted mb-0">kate.hunington@gmail.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="fw-normal mb-1">Designer</p>
-                      <p class="text-muted mb-0">UI/UX</p>
-                    </td>
-                    <td>
-                      <span class="badge badge-warning rounded-pill d-inline">Awaiting</span>
-                    </td>
-                    <td>Senior</td>
-                    <td>
-                      <button
-                              type="button"
-                              class="btn btn-link btn-rounded btn-sm fw-bold"
-                              data-mdb-ripple-color="dark"
-                              >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
+                @endforeach 
                 </tbody>
             </table>
         </div>
@@ -195,37 +126,81 @@
 
     <!-- MDB -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script><script>
+<script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+
 $(document).ready(function(){
+  toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
 
-    $('#student_post_ajax').submit(function(e){
-        e.preventDefault();
+  $('#student_post_ajax').submit(function(e){
+      e.preventDefault();
+      let addForm = new FormData($('#student_post_ajax')[0]);
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type:'post',
+          url: '/student_post',
+          data:addForm,
+          contentType:false,
+          processData:false,
+          success: function(data){ 
+              console.log(data);
+              if(data.status=='201'){
+                  $('.table').load(location.href+' .table');
+                  $('#exampleModal').modal('hide');
+                  toastr.success('Student Add Success');
+              }else{
+                  alert('Student add Fail');
+              }
+          },
+          error:function (response){
+            console.log(response);
 
-        let addForm = new FormData($('#student_post_ajax')[0]);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type:'post',
-            url: '/student_post',
-            data:addForm,
-            contentType:false,
-            processData:false,
-            success: function(data){
-                console.log(data);
-                if(data.status=='201'){
-                    $('#exampleModal').modal('hide');
-                    alert('student Add success !');
-                }else{
-                    alert('Student add Fail');
-                }
-            },
-            error:function (response){
-              console.log(response);
+          }
+      });
+  })
 
-            }
-        });
+  $('.delete_btn').click(function(e){
+    e.preventDefault();
+    $id = $(this).attr('id_val');
+    $('.table').load(location.href+' .table');
+    $.ajax({
+      type:'get',
+      url:'/student_delete/'+$id,
+      success:function (response) {
+        $('.table').load(location.href+' .table');
+        console.log(response);
+        toastr.success('Student Delete Success');
+      },
+      error:function (response) {
+        $('.table').load(location.href+' .table');
+        console.log(response);
+        
+      }
     })
+
+  });
 
 
 });
